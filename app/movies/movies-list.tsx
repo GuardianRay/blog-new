@@ -3,9 +3,35 @@
 import { useSearchParams } from 'next/navigation'
 import { MovieCard } from '~/components/cards/movie'
 import { Twemoji } from '~/components/ui/twemoji'
-import type { SelectMovie } from '~/db/schema'
 import { RATES, RateFilter, type RateType } from './rate-filter'
 import { type TitleType, TitleTypeFilter } from './title-type-filter'
+
+type Movie = {
+  id: string
+  const: string
+  yourRating: string
+  dateRated: string
+  title: string
+  originalTitle: string
+  url: string
+  titleType: string
+  imdbRating: string
+  runtime: string
+  year?: string
+  genres: string
+  numVotes: string
+  releaseDate: string
+  directors: string
+  actors: string
+  plot: string
+  poster: string
+  language: string
+  country: string
+  awards: string
+  boxOffice?: string
+  totalSeasons?: string
+  ratings: Array<{ value: string; source: string }>
+}
 
 const MOVIES_TITLE_TYPES: Record<TitleType, string> = {
   all: 'All',
@@ -13,7 +39,7 @@ const MOVIES_TITLE_TYPES: Record<TitleType, string> = {
   'tv-series': 'TV Series',
 }
 
-export function MoviesList({ movies }: { movies: SelectMovie[] }) {
+export function MoviesList({ movies }: { movies: Movie[] }) {
   let searchParams = useSearchParams()
   let rate = (searchParams.get('rate') as RateType) || '10'
   let type = (searchParams.get('type') as TitleType) || 'all'

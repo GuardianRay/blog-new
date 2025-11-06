@@ -2,13 +2,21 @@ import { ArrowRight, Film } from 'lucide-react'
 import { GrowingUnderline } from '~/components/ui/growing-underline'
 import { Image } from '~/components/ui/image'
 import { Link } from '~/components/ui/link'
-import type { SelectMovie } from '~/db/schema'
 import { getTimeAgo } from '~/utils/misc'
+
+type Movie = {
+  title: string
+  url: string
+  poster: string
+  year?: string
+  runtime: string
+  dateRated: string
+}
 
 export function LastWatched({
   lastWatchedMovie,
 }: {
-  lastWatchedMovie: SelectMovie
+  lastWatchedMovie: Movie
 }) {
   return (
     <div className="flex items-center gap-4">

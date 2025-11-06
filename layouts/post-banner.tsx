@@ -12,7 +12,6 @@ import { SocialShare } from '~/components/blog/social-share'
 import { TagsList } from '~/components/blog/tags'
 import { Container } from '~/components/ui/container'
 import { SITE_METADATA } from '~/data/site-metadata'
-import type { StatsType } from '~/db/schema'
 import type { CoreContent } from '~/types/data'
 
 interface LayoutProps {
@@ -49,7 +48,6 @@ export function PostBanner({ content, children }: LayoutProps) {
               <BlogMeta
                 date={date}
                 lastmod={lastmod}
-                type={type.toLowerCase() as StatsType}
                 slug={slug}
                 readingTime={readingTime}
               />

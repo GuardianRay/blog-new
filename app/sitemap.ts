@@ -23,7 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'snippets',
     'projects',
     'about',
-    'books',
     'movies',
     'tags',
   ].map((route) => ({

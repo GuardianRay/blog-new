@@ -1,13 +1,10 @@
 'use client'
 
-import { Clock, Github, MapPin, Star } from 'lucide-react'
-import useSWR from 'swr'
+import { Clock, Github, MapPin } from 'lucide-react'
 import { GrowingUnderline } from '~/components/ui/growing-underline'
 import { Link } from '~/components/ui/link'
 import { Twemoji } from '~/components/ui/twemoji'
 import { SITE_METADATA } from '~/data/site-metadata'
-import type { GithubRepository } from '~/types/data'
-import { fetcher } from '~/utils/misc'
 
 const TIME_IS = 'https://time.is/Hanoi'
 const MY_TIMEZONE = 'Asia/Ho_Chi_Minh'
@@ -38,10 +35,6 @@ export function FooterMeta() {
   let { time, diff } = getTime()
   let siteRepo = SITE_METADATA.siteRepo.replace('https://github.com/', '')
   let repoName = siteRepo.split('/')[1]
-  let { data: repo } = useSWR<GithubRepository>(
-    `/api/github?repo=${siteRepo}`,
-    fetcher,
-  )
 
   return (
     <div className="space-y-2 py-1.5 text-gray-800 dark:text-gray-200">
@@ -52,11 +45,6 @@ export function FooterMeta() {
             {repoName}
           </GrowingUnderline>
         </Link>
-        <span>-</span>
-        <span className="inline-flex items-center text-gray-500 dark:text-gray-400">
-          <Star className="mr-1 h-4 w-4" />
-          {repo ? <span>{repo.stargazerCount}</span> : '---'}
-        </span>
       </div>
       <div className="flex items-center gap-2">
         <MapPin className="h-5 w-5" />

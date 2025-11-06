@@ -1,8 +1,15 @@
 import { Brand } from '~/components/ui/brand'
 import { Link } from '~/components/ui/link'
-import type { SelectMovie } from '~/db/schema'
 
-export function Ratings({ movie }: { movie: SelectMovie }) {
+type Movie = {
+  imdbRating: string
+  ratings: Array<{ value: string; source: string }>
+  url: string
+  title: string
+  numVotes: string
+}
+
+export function Ratings({ movie }: { movie: Movie }) {
   let { imdbRating, ratings, url, title, numVotes } = movie
   let rottenTomatoRating = ratings.find(
     ({ source }) => source === 'Rotten Tomatoes',

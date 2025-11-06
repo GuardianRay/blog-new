@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { Suspense } from 'react'
 import { genPageMetadata } from '~/app/seo'
 import { Container } from '~/components/ui/container'
@@ -5,14 +7,50 @@ import { GrowingUnderline } from '~/components/ui/growing-underline'
 import { Link } from '~/components/ui/link'
 import { PageHeader } from '~/components/ui/page-header'
 import { SITE_METADATA } from '~/data/site-metadata'
-import { getAllMovies } from '~/db/queries'
-import type { SelectMovie } from '~/db/schema'
+import { convertKeysToCamelCase } from '~/utils/data-transform'
 import { MoviesList } from './movies-list'
 
 export let metadata = genPageMetadata({ title: 'My movies list' })
 
-export default async function MoviesPage() {
-  let movies = await getAllMovies().catch(() => [] as SelectMovie[])
+type Movie = {
+  id: string
+  const: string
+  yourRating: string
+  dateRated: string
+  title: string
+  originalTitle: string
+  url: string
+  titleType: string
+  imdbRating: string
+  runtime: string
+  year?: string
+  genres: string
+  numVotes: string
+  releaseDate: string
+  directors: string
+  actors: string
+  plot: string
+  poster: string
+  language: string
+  country: string
+  awards: string
+  boxOffice?: string
+  totalSeasons?: string
+  ratings: Array<{ value: string; source: string }>
+}
+
+export default function MoviesPage() {
+  let movies: Movie[] = []
+  try {
+    const moviesJsonPath = join(process.cwd(), 'json', 'movies.json')
+    const moviesData = readFileSync(moviesJsonPath, 'utf-8')
+    const rawMovies = JSON.parse(moviesData)
+    movies = convertKeysToCamelCase(rawMovies, {
+      fieldMappings: { const: 'id' },
+    }) as Movie[]
+  } catch (error) {
+    console.error('Error loading movies:', error)
+  }
 
   return (
     <Container className="pt-4 lg:pt-12">

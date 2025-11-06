@@ -2,12 +2,29 @@ import { GrowingUnderline } from '~/components/ui/growing-underline'
 import { Link } from '~/components/ui/link'
 import { Rating } from '~/components/ui/rating'
 import { Twemoji } from '~/components/ui/twemoji'
-import type { SelectBook } from '~/db/schema'
 import GoodreadsLogo from '~/icons/goodreads-big.svg'
 import { BookCover } from './book-cover'
 import { BookDetails } from './book-details'
 
-export function BookCard({ book }: { book: SelectBook }) {
+type Book = {
+  title: string
+  link?: string
+  bookLargeImageUrl: string
+  authorName: string
+  userRating: string
+  averageRating: string
+  content: string
+  bookDescription?: string
+  bookPublished?: string
+  numPages?: number
+  userReview?: string
+  userShelves?: string
+  userReadAt?: string
+  userDateAdded?: string
+  isbn?: string
+}
+
+export function BookCard({ book }: { book: Book }) {
   return (
     <div className="flex flex-col gap-8 md:flex-row">
       <div className="mx-auto flex w-60 shrink-0 items-center justify-center">
@@ -42,7 +59,7 @@ export function BookCard({ book }: { book: SelectBook }) {
   )
 }
 
-function BookMeta({ book }: { book: SelectBook }) {
+function BookMeta({ book }: { book: Book }) {
   return (
     <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
       <div className="flex items-center gap-1.5">

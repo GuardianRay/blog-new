@@ -4,9 +4,13 @@ import clsx from 'clsx'
 import { type LucideProps, PenTool, Quote } from 'lucide-react'
 import { useState } from 'react'
 import { Twemoji } from '~/components/ui/twemoji'
-import type { SelectBook } from '~/db/schema'
 
-export function BookDetails({ book }: { book: SelectBook }) {
+type Book = {
+  bookDescription?: string
+  userReview?: string
+}
+
+export function BookDetails({ book }: { book: Book }) {
   let [tab, setTab] = useState<'summary' | 'review'>('summary')
   return (
     <div className="space-y-3">

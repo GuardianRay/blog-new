@@ -3,14 +3,26 @@ import { GrowingUnderline } from '~/components/ui/growing-underline'
 import { Image, Zoom } from '~/components/ui/image'
 import { Link } from '~/components/ui/link'
 import { TiltedGridBackground } from '~/components/ui/tilted-grid-background'
-import type { SelectMovie } from '~/db/schema'
 import { Ratings } from './ratings'
+
+type Movie = {
+  url: string
+  title: string
+  titleType: string
+  poster: string
+  year?: string
+  runtime: string
+  totalSeasons?: string
+  imdbRating: string
+  ratings: Array<{ value: string; source: string }>
+  numVotes: string
+}
 
 function getLargePoster(poster: string, size = 1000) {
   return poster.replace('._V1_SX300', `._V1_SX${size}`)
 }
 
-export function MovieCard({ movie }: { movie: SelectMovie }) {
+export function MovieCard({ movie }: { movie: Movie }) {
   let { url, title, titleType, poster, year, runtime, totalSeasons } = movie
 
   function handleZoom(e: React.MouseEvent<HTMLDivElement>) {

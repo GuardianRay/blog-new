@@ -2,13 +2,20 @@ import { ArrowRight, BookOpen } from 'lucide-react'
 import { GrowingUnderline } from '~/components/ui/growing-underline'
 import { Image } from '~/components/ui/image'
 import { Link } from '~/components/ui/link'
-import type { SelectBook } from '~/db/schema'
 import { getTimeAgo } from '~/utils/misc'
+
+type Book = {
+  title: string
+  link: string
+  bookLargeImageUrl: string
+  authorName: string
+  userDateAdded: string
+}
 
 export function CurrentlyReading({
   currentlyReading,
 }: {
-  currentlyReading: SelectBook
+  currentlyReading: Book
 }) {
   return (
     <div className="flex items-center gap-4">
@@ -45,12 +52,6 @@ export function CurrentlyReading({
           <span className="ml-4 flex-shrink-0 rounded-full bg-neutral-200 px-2.5 py-0.5 text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-300">
             {getTimeAgo(currentlyReading.userDateAdded)}
           </span>
-          <Link
-            href="/books"
-            className="rounded p-2 text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
-          >
-            <ArrowRight className="h-4 w-4" />
-          </Link>
         </div>
       </div>
     </div>
