@@ -24,6 +24,8 @@ const FONT_PLAYPEN_SANS = Playpen_Sans({
   display: 'swap',
   weight: ['800'],
   variable: '--font-playpen-sans',
+  fallback: ['system-ui', 'arial'],
+  adjustFontFallback: false,
 })
 
 const FONT_NUNITO = Nunito({
@@ -32,6 +34,8 @@ const FONT_NUNITO = Nunito({
   style: ['normal', 'italic'],
   weight: ['400', '500', '600', '700', '800'],
   variable: '--font-nunito',
+  fallback: ['system-ui', 'arial'],
+  adjustFontFallback: false,
 })
 
 const FONT_GEIST = Geist_Mono({
@@ -40,6 +44,8 @@ const FONT_GEIST = Geist_Mono({
   style: ['normal'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-geist',
+  fallback: ['monospace'],
+  adjustFontFallback: false,
 })
 
 const FONT_JETBRAINS_MONO = JetBrains_Mono({
@@ -48,6 +54,8 @@ const FONT_JETBRAINS_MONO = JetBrains_Mono({
   style: ['normal', 'italic'],
   display: 'swap',
   variable: '--font-jetbrains-mono',
+  fallback: ['monospace'],
+  adjustFontFallback: false,
 })
 
 export let metadata: Metadata = {

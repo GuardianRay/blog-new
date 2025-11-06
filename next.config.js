@@ -56,7 +56,6 @@ const securityHeaders = [
 
 const output = process.env.EXPORT ? 'export' : undefined
 const basePath = process.env.BASE_PATH || undefined
-const unoptimized = process.env.UNOPTIMIZED ? true : undefined
 
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
@@ -69,25 +68,7 @@ module.exports = () => {
     reactStrictMode: true,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
     images: {
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'i.gr-assets.com', // Goodreads book covers
-        },
-        {
-          protocol: 'https',
-          hostname: 'i.scdn.co', // Spotify album covers
-        },
-        {
-          protocol: 'https',
-          hostname: 'm.media-amazon.com', // IMDB movie posters
-        },
-        {
-          protocol: 'https',
-          hostname: 'avatars.githubusercontent.com',
-        },
-      ],
-      unoptimized,
+      unoptimized: true, // Disable image optimization to avoid build-time network requests
     },
     async redirects() {
       return [

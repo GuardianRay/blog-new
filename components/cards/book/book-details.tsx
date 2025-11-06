@@ -70,7 +70,7 @@ function TabTrigger(props: {
 
 function TabContent(props: {
   icon: React.FC<LucideProps>
-  content: string | null
+  content: string | null | undefined
 }) {
   let { icon: Icon, content } = props
   return (
