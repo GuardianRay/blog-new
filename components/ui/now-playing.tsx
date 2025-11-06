@@ -5,7 +5,6 @@ import { Brand } from '~/components/ui/brand'
 import { GrowingUnderline } from '~/components/ui/growing-underline'
 import { Link } from '~/components/ui/link'
 import { MusicWaves } from '~/components/ui/music-waves'
-import { useNowPlaying } from '~/hooks/use-now-playing'
 import { Image } from './image'
 
 export function SpotifyNowPlaying({
@@ -17,7 +16,10 @@ export function SpotifyNowPlaying({
   showCover?: boolean
   songEffect?: 'none' | 'underline'
 }) {
-  let data = useNowPlaying()
+  let data = {
+    isPlaying: true,
+    song: { title: 'Test', artist: 'Test', albumImageUrl: '', songUrl: '' },
+  }
 
   if (!data.isPlaying) {
     return (

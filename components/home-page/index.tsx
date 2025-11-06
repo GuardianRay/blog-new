@@ -49,7 +49,7 @@ export function Home({
         </div>
       </div>
       <LatestPosts posts={posts} snippets={snippets} />
-      <ActivitiesFeed />
+      {/* <ActivitiesFeed /> */}
       {/* {SITE_METADATA.newsletter?.provider && (
         <div className="flex items-center justify-center py-4 lg:py-10">
           <NewsletterForm />

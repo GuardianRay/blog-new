@@ -5,7 +5,6 @@ import { GrowingUnderline } from '~/components/ui/growing-underline'
 import { Image } from '~/components/ui/image'
 import { Link } from '~/components/ui/link'
 import { MusicWaves } from '~/components/ui/music-waves'
-import { useNowPlaying } from '~/hooks/use-now-playing'
 import type { RecentlyPlayedData } from '~/types/data'
 import { getTimeAgo } from '~/utils/misc'
 
@@ -14,7 +13,10 @@ export function LastPlayed({
 }: {
   recentlyPlayed: RecentlyPlayedData
 }) {
-  let nowPlayingData = useNowPlaying()
+  let nowPlayingData = {
+    isPlaying: true,
+    song: { title: 'Test', artist: 'Test', albumImageUrl: '', songUrl: '' },
+  }
 
   // If there's a song currently playing, show that instead
   if (nowPlayingData.isPlaying && nowPlayingData.song) {
