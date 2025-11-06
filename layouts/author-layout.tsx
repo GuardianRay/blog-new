@@ -32,13 +32,13 @@ export function AuthorLayout({ children }: Props) {
                 Hi there <Twemoji emoji="waving-hand" />
               </h3>
               <p>
-                I'm <strong>Tuan Anh Huynh</strong> (alias <strong>Leo</strong>{' '}
-                at work), a software engineer from <strong>Vietnam</strong>. I
-                have a passion for all things <strong>Javascript</strong>. I
-                enjoy building eCommerce software and stuff related to web dev.
-                I work mainly with <strong>Typescript</strong>,{' '}
-                <strong>React</strong>, <strong>NodeJS</strong>,{' '}
-                <strong>Remix</strong>, and <strong>TailwindCSS</strong>.
+                I'm <strong>Fynn</strong> (alias <strong>Leo</strong> at work),
+                a software engineer from <strong>Vietnam</strong>. I have a
+                passion for all things <strong>Javascript</strong>. I enjoy
+                building eCommerce software and stuff related to web dev. I work
+                mainly with <strong>Typescript</strong>, <strong>React</strong>,{' '}
+                <strong>NodeJS</strong>, <strong>Remix</strong>, and{' '}
+                <strong>TailwindCSS</strong>.
               </p>
               {/* <p>
                 I would greatly appreciate any comments and thoughts on my posts{' '}

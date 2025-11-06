@@ -1,34 +1,32 @@
 export const SITE_METADATA = {
-  title: `Leo's dev blog – stories, insights, and ideas`,
-  author: 'Leo Huynh',
-  headerTitle: `Leo's dev blog`,
+  title: `Fynn's dev blog – stories, insights, and ideas`,
+  author: 'Fynn',
+  headerTitle: `Fynn's dev blog`,
   description:
     'A personal space on the cloud where I document my programming journey, sharing lessons, insights, and resources for fellow developers.',
   language: 'en-us',
   locale: 'en-US',
   stickyNav: true,
   theme: 'system', // system, dark or light
-  siteUrl: 'https://www.leohuynh.dev',
-  siteRepo: 'https://github.com/hta218/leohuynh.dev',
+  siteUrl: 'https://www.fynn.dev',
+  siteRepo: 'https://github.com/fynn-dev/fynn.dev',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.jpg`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.jpeg`,
-  email: 'contact@leohuynh.dev',
-  github: 'https://github.com/hta218',
-  x: 'https://x.com/hta218_',
-  facebook: 'https://facebook.com/hta218',
-  youtube: 'https://www.youtube.com/@hta218_',
-  linkedin: 'https://www.linkedin.com/in/hta218',
-  threads: 'https://www.threads.net/hta218_',
-  instagram: 'https://www.instagram.com/hta218_',
-  goodreadsBookshelfUrl:
-    'https://www.goodreads.com/review/list/179720035-leo-huynh',
-  goodreadsFeedUrl: 'https://www.goodreads.com/review/list_rss/179720035',
-  imdbRatingsList: 'https://www.imdb.com/user/ur154483197/ratings/?view=grid',
+  email: 'meetguardian@gmail.com',
+  github: 'https://github.com',
+  x: '',
+  facebook: '',
+  youtube: '',
+  linkedin: '',
+  threads: '',
+  instagram: '',
+  goodreadsBookshelfUrl: '',
+  goodreadsFeedUrl: '',
+  imdbRatingsList: '',
   analytics: {
     umamiAnalytics: {
       websiteId: process.env.NEXT_UMAMI_ID,
-      shareUrl:
-        'https://analytics.leohuynh.dev/share/c9ErglxqzY5CQJ8g/leohuynh.dev',
+      shareUrl: '',
     },
   },
   newsletter: {
@@ -58,8 +56,8 @@ export const SITE_METADATA = {
     },
   },
   support: {
-    buyMeACoffee: 'https://www.buymeacoffee.com/leohuynh.dev',
-    paypal: 'https://paypal.me/hta218?country.x=VN&locale.x=en_US',
-    kofi: 'https://ko-fi.com/hta218',
+    buyMeACoffee: '',
+    paypal: '',
+    kofi: '',
   },
 }

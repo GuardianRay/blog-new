@@ -6,9 +6,9 @@ import { Link } from '~/components/ui/link'
 import { Twemoji } from '~/components/ui/twemoji'
 import { SITE_METADATA } from '~/data/site-metadata'
 
-const TIME_IS = 'https://time.is/Hanoi'
-const MY_TIMEZONE = 'Asia/Ho_Chi_Minh'
-const MY_TIMEZONE_OFFSET = 7 * -60 // UTC+7
+const TIME_IS = 'https://time.is/Beijing'
+const MY_TIMEZONE = 'Asia/Shanghai'
+const MY_TIMEZONE_OFFSET = 8 * -60 // UTC+8
 
 function getTime() {
   let date = new Date()
@@ -48,10 +48,7 @@ export function FooterMeta() {
       </div>
       <div className="flex items-center gap-2">
         <MapPin className="h-5 w-5" />
-        <span className="font-medium">
-          [::1]:443 - Ha Noi,{' '}
-          <Twemoji emoji="flag-vietnam" className="h-4.5!" />
-        </span>
+        <span className="font-medium">Beijing, China</span>
       </div>
       <div className="flex items-center gap-2">
         <Clock className="h-5 w-5" />

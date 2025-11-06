@@ -32,7 +32,7 @@ export function Footer() {
         </div>
         <FooterNav />
       </div>
-      <FooterBottom />
+      {/* <FooterBottom /> */}
     </Container>
   )
 }

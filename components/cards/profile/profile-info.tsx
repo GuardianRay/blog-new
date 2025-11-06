@@ -20,29 +20,29 @@ const SOCIALS = [
     Icon: () => <Github size={20} strokeWidth={1.5} />,
     umamiEvent: 'profile-card-github',
   },
-  {
-    platform: 'linkedin',
-    handle: getAccountHandle(SITE_METADATA.linkedin),
-    href: SITE_METADATA.linkedin,
-    Icon: () => <Linkedin size={20} strokeWidth={1.5} />,
-    umamiEvent: 'profile-card-linkedin',
-  },
-  {
-    platform: 'x',
-    handle: getAccountHandle(SITE_METADATA.x),
-    href: SITE_METADATA.x,
-    Icon: () => (
-      <XIcon className="h-4 w-4" fill="#fff" viewBox="0 0 1200 1227" />
-    ),
-    umamiEvent: 'profile-card-x',
-  },
+  //   {
+  //     platform: 'linkedin',
+  //     handle: getAccountHandle(SITE_METADATA.linkedin),
+  //     href: SITE_METADATA.linkedin,
+  //     Icon: () => <Linkedin size={20} strokeWidth={1.5} />,
+  //     umamiEvent: 'profile-card-linkedin',
+  //   },
+  //   {
+  //     platform: 'x',
+  //     handle: getAccountHandle(SITE_METADATA.x),
+  //     href: SITE_METADATA.x,
+  //     Icon: () => (
+  //       <XIcon className="h-4 w-4" fill="#fff" viewBox="0 0 1200 1227" />
+  //     ),
+  //     umamiEvent: 'profile-card-x',
+  //   },
 ]
 
 export function ProfileCardInfo() {
   return (
     <div className="hidden py-4 md:block md:px-5">
       <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
-        Tuan Anh (Leo) Huynh
+        Fynn
       </h3>
       <h5 className="py-2 text-gray-500 dark:text-gray-400">
         Learner | Builder
@@ -51,25 +51,20 @@ export function ProfileCardInfo() {
         <div className="flex items-center text-gray-700 dark:text-gray-200">
           <BriefcaseBusiness strokeWidth={1.5} size={20} />
           <p className="flex items-center px-2">
-            CTO & Co-Founder @{' '}
+            Senior FE Engineer @{' '}
             <a
               target="_blank"
               href="https://weaverse.io"
               rel="noreferrer"
               className="underline-offset-4 hover:underline"
             >
-              Weaverse
+              360
             </a>
           </p>
         </div>
         <div className="flex items-center text-gray-700 dark:text-gray-200">
           <MapPin strokeWidth={1.5} size={20} />
-          <p className="px-2">
-            [::1]:443 - Ha Noi,
-            <span className="absolute ml-1 inline-flex pt-px">
-              <Twemoji emoji="flag-vietnam" />
-            </span>
-          </p>
+          <p className="px-2">Beijing, China</p>
         </div>
         <div className="flex items-center text-gray-700 dark:text-gray-200">
           <Mail strokeWidth={1.5} size={20} />
