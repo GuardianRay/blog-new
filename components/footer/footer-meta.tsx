@@ -3,7 +3,6 @@
 import { Clock, Github, MapPin } from 'lucide-react'
 import { GrowingUnderline } from '~/components/ui/growing-underline'
 import { Link } from '~/components/ui/link'
-import { Twemoji } from '~/components/ui/twemoji'
 import { SITE_METADATA } from '~/data/site-metadata'
 
 const TIME_IS = 'https://time.is/Beijing'
