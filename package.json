@@ -4,7 +4,7 @@
   "scripts": {
     "start": "PORT=3435 next dev",
     "dev": "PORT=3434 next dev",
-    "build": "next build && npm run postbuild",
+    "build": "next build",
     "postbuild": "cross-env NODE_OPTIONS='--experimental-json-modules' tsx ./scripts/post-build.ts",
     "serve": "next start",
     "clean": "rm -rf .next .contentlayer .cache node_modules pnpm-lock.yaml",
