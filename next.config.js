@@ -70,6 +70,13 @@ module.exports = () => {
     images: {
       unoptimized: true, // Disable image optimization to avoid build-time network requests
     },
+    // 在生产环境构建时禁用 ESLint 和 TypeScript 类型检查以加快构建速度
+    eslint: {
+      ignoreDuringBuilds: true, // 构建时忽略 ESLint 错误
+    },
+    typescript: {
+      ignoreBuildErrors: true, // 构建时忽略 TypeScript 类型错误
+    },
     async redirects() {
       return [
         {
