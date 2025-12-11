@@ -2,15 +2,27 @@ import 'css/tailwind.css'
 import 'css/twemoji.css'
 import 'react-medium-image-zoom/dist/styles.css'
 import 'remark-github-blockquote-alert/alert.css'
+// 使用 fontsource 字体包（本地打包，不依赖外部服务）
+import '@fontsource/playpen-sans/800.css'
+import '@fontsource/nunito/400.css'
+import '@fontsource/nunito/400-italic.css'
+import '@fontsource/nunito/500.css'
+import '@fontsource/nunito/600.css'
+import '@fontsource/nunito/700.css'
+import '@fontsource/nunito/800.css'
+import '@fontsource/geist-mono/400.css'
+import '@fontsource/geist-mono/500.css'
+import '@fontsource/geist-mono/600.css'
+import '@fontsource/geist-mono/700.css'
+import '@fontsource/jetbrains-mono/400.css'
+import '@fontsource/jetbrains-mono/400-italic.css'
+import '@fontsource/jetbrains-mono/500.css'
+import '@fontsource/jetbrains-mono/500-italic.css'
+import '@fontsource/jetbrains-mono/600.css'
+import '@fontsource/jetbrains-mono/600-italic.css'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import clsx from 'clsx'
 import type { Metadata } from 'next'
-import {
-  Geist_Mono,
-  JetBrains_Mono,
-  Nunito,
-  Playpen_Sans,
-} from 'next/font/google'
 import { UmamiAnalytics } from '~/components/analytics/umami'
 import { Footer } from '~/components/footer'
 import { Header } from '~/components/header'
@@ -18,45 +30,6 @@ import { KBarSearchProvider } from '~/components/search/kbar-provider'
 import { TiltedGridBackground } from '~/components/ui/tilted-grid-background'
 import { SITE_METADATA } from '~/data/site-metadata'
 import { ThemeProviders } from './theme-providers'
-
-const FONT_PLAYPEN_SANS = Playpen_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['800'],
-  variable: '--font-playpen-sans',
-  fallback: ['system-ui', 'arial'],
-  adjustFontFallback: false,
-})
-
-const FONT_NUNITO = Nunito({
-  subsets: ['latin'],
-  display: 'swap',
-  style: ['normal', 'italic'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-nunito',
-  fallback: ['system-ui', 'arial'],
-  adjustFontFallback: false,
-})
-
-const FONT_GEIST = Geist_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  style: ['normal'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-geist',
-  fallback: ['monospace'],
-  adjustFontFallback: false,
-})
-
-const FONT_JETBRAINS_MONO = JetBrains_Mono({
-  weight: ['400', '500', '600'],
-  subsets: ['latin'],
-  style: ['normal', 'italic'],
-  display: 'swap',
-  variable: '--font-jetbrains-mono',
-  fallback: ['monospace'],
-  adjustFontFallback: false,
-})
 
 export let metadata: Metadata = {
   metadataBase: new URL(SITE_METADATA.siteUrl),
@@ -106,13 +79,7 @@ export default function RootLayout({
   return (
     <html
       lang={SITE_METADATA.language}
-      className={clsx(
-        'w-full overflow-x-hidden scroll-smooth antialiased',
-        FONT_NUNITO.variable,
-        FONT_JETBRAINS_MONO.variable,
-        FONT_PLAYPEN_SANS.variable,
-        FONT_GEIST.variable,
-      )}
+      className="w-full overflow-x-hidden scroll-smooth antialiased"
       suppressHydrationWarning
     >
       <link
