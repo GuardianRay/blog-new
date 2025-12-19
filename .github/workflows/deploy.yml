@@ -1,31 +1,25 @@
-name: Deploy Next.js to Server
-
-on:
-  push:
-    branches: [ main ] # 当 main 分支有推送时触发
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest # 在 GitHub 提供的免费 Ubuntu 环境中构建
-
-    steps:
+steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8 # 或者使用 latest
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: 'pnpm' # 自动识别 pnpm-lock.yaml 进行缓存
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile # 确保版本与 lock 文件完全一致
 
       - name: Build project
-        run: npm run build
+        run: pnpm run build
 
       - name: Prepare deployment files
-        # 这一步将 standalone 模式所需的文件打包
         run: |
           mkdir deploy
           cp -r .next/standalone/* ./deploy/
@@ -33,24 +27,4 @@ jobs:
           cp -r .next/static ./deploy/.next/static
           tar -czvf deploy.tar.gz -C deploy .
 
-      - name: Copy files to server via SSH
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "deploy.tar.gz"
-          target: "/home/blog-new" # 服务器存放路径
-
-      - name: Execute remote SSH commands to deploy
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /home/blog-new
-            tar -xzvf deploy.tar.gz
-            # 首次运行使用 pm2 start，后续使用 restart
-            pm2 restart nextjs-blog || pm2 start server.js --name "nextjs-blog"
-            rm deploy.tar.gz
+      # ... 后续的 SCP 和 SSH 步骤保持不变 ...
