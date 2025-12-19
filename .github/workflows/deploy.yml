@@ -2,7 +2,7 @@ name: Deploy Next.js to CentOS
 
 on:
   push:
-    branches: [ main ] # 如果你的主分支叫 master，请改为 master
+    branches: [ main ] # 如果你的主分支叫 master，请确保这里一致
 
 jobs:
   build-and-deploy:
@@ -15,7 +15,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10 # 匹配你本地的 10.8.1
+          version: 10 # 匹配你本地的 pnpm 10.8.1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -24,19 +24,39 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        # 使用 --no-frozen-lockfile 解决版本不兼容导致的 absent 报错
+        # 使用 --no-frozen-lockfile 兼容不同环境下可能存在的 lockfile 微调
         run: pnpm install --no-frozen-lockfile
 
       - name: Build project
         run: pnpm run build
 
       - name: Prepare deployment files
-        # 提取 Standalone 模式下的核心文件，减少传输体积
         run: |
-          mkdir deploy
-          cp -r .next/standalone/* ./deploy/
-          cp -r public ./deploy/public
-          cp -r .next/static ./deploy/.next/static
+          # 1. 创建带层级的目标目录
+          mkdir -p deploy/.next/static
+          
+          # 2. 检查并拷贝 standalone 核心运行文件
+          if [ -d ".next/standalone" ]; then
+            cp -r .next/standalone/. ./deploy/
+            echo "✅ Standalone files copied."
+          else
+            echo "❌ Error: .next/standalone not found. Check your next.config.js output setting."
+            exit 1
+          fi
+
+          # 3. 拷贝静态资源 (standalone 不包含这些，必须手动拷入以保证样式和图片正常)
+          if [ -d "public" ]; then
+            cp -r public ./deploy/
+            echo "✅ Public folder copied."
+          fi
+          
+          if [ -d ".next/static" ]; then
+            # 这一步修复了之前的 "No such file or directory" 错误
+            cp -r .next/static/. ./deploy/.next/static/
+            echo "✅ Static assets copied."
+          fi
+
+          # 4. 压缩打包
           tar -czvf deploy.tar.gz -C deploy .
 
       - name: Copy files to server via SSH
@@ -46,7 +66,7 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "deploy.tar.gz"
-          target: "/home/blog-new" # 确保服务器上该目录已创建
+          target: "/home/blog-new"
 
       - name: Execute remote SSH commands to deploy
         uses: appleboy/ssh-action@v1.0.3
@@ -55,9 +75,17 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # 进入服务器部署目录
             cd /home/blog-new
+            
+            # 解压新包（覆盖旧文件）
             tar -xzvf deploy.tar.gz
-            # 自动重启或启动 PM2 进程
-            # 这里的 server.js 是 Next.js standalone 模式生成的入口文件
+            
+            # 使用 PM2 启动或重启
+            # Next.js standalone 模式的入口是 server.js
+            # --name 定义应用名，方便管理
             pm2 restart nextjs-blog || pm2 start server.js --name "nextjs-blog"
+            
+            # 清理压缩包
             rm deploy.tar.gz
+            echo "🚀 Deployment successful!"
