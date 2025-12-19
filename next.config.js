@@ -77,6 +77,11 @@ module.exports = () => {
     typescript: {
       ignoreBuildErrors: true, // 构建时忽略 TypeScript 类型错误
     },
+    experimental: {
+      // 强制限制构建使用的 CPU 核心数为 1，减少内存并发占用
+      cpus: 1,
+      workerThreads: false,
+    },
     async redirects() {
       return [
         {
