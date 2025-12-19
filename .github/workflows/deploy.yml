@@ -1,21 +1,21 @@
-name: Deploy Next.js to Server
+name: Deploy Next.js to CentOS
 
 on:
   push:
-    branches: [ main ] # 确保你的主分支名是 main
+    branches: [ main ] # 如果你的主分支叫 master，请改为 master
 
 jobs:
-  build-and-deploy: # 这是 job 的名字
+  build-and-deploy:
     runs-on: ubuntu-latest
-    
-    steps: # steps 必须在 job 名字下面，且缩进两个空格
+
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 10 # 匹配你本地的 10.8.1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -24,12 +24,14 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        # 使用 --no-frozen-lockfile 解决版本不兼容导致的 absent 报错
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build project
         run: pnpm run build
 
       - name: Prepare deployment files
+        # 提取 Standalone 模式下的核心文件，减少传输体积
         run: |
           mkdir deploy
           cp -r .next/standalone/* ./deploy/
@@ -44,7 +46,7 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "deploy.tar.gz"
-          target: "/home/blog-new"
+          target: "/home/blog-new" # 确保服务器上该目录已创建
 
       - name: Execute remote SSH commands to deploy
         uses: appleboy/ssh-action@v1.0.3
@@ -55,5 +57,7 @@ jobs:
           script: |
             cd /home/blog-new
             tar -xzvf deploy.tar.gz
+            # 自动重启或启动 PM2 进程
+            # 这里的 server.js 是 Next.js standalone 模式生成的入口文件
             pm2 restart nextjs-blog || pm2 start server.js --name "nextjs-blog"
             rm deploy.tar.gz
