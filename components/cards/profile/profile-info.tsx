@@ -58,7 +58,7 @@ export function ProfileCardInfo() {
               rel="noreferrer"
               className="underline-offset-4 hover:underline"
             >
-              360
+              Apple
             </a>
           </p>
         </div>
