@@ -19,6 +19,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          debug: true
           script: |
             # 1. 进入项目目录
             cd /www/wwwroot/my-next-app  # 确保路径正确
