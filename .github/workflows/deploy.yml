@@ -1,91 +1,38 @@
-name: Deploy Next.js to CentOS
+name: Deploy Next.js to Aliyun
 
 on:
   push:
-    branches: [ main ] # 如果你的主分支叫 master，请确保这里一致
+    branches:
+      - main  # 当 main 分支有推送时触发
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10 # 匹配你本地的 pnpm 10.8.1
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        # 使用 --no-frozen-lockfile 兼容不同环境下可能存在的 lockfile 微调
-        run: pnpm install --no-frozen-lockfile
-
-      - name: Build project
-        run: pnpm run build
-
-      - name: Prepare deployment files
-        run: |
-          # 1. 创建带层级的目标目录
-          mkdir -p deploy/.next/static
-          
-          # 2. 检查并拷贝 standalone 核心运行文件
-          if [ -d ".next/standalone" ]; then
-            cp -r .next/standalone/. ./deploy/
-            echo "✅ Standalone files copied."
-          else
-            echo "❌ Error: .next/standalone not found. Check your next.config.js output setting."
-            exit 1
-          fi
-
-          # 3. 拷贝静态资源 (standalone 不包含这些，必须手动拷入以保证样式和图片正常)
-          if [ -d "public" ]; then
-            cp -r public ./deploy/
-            echo "✅ Public folder copied."
-          fi
-          
-          if [ -d ".next/static" ]; then
-            # 这一步修复了之前的 "No such file or directory" 错误
-            cp -r .next/static/. ./deploy/.next/static/
-            echo "✅ Static assets copied."
-          fi
-
-          # 4. 压缩打包
-          tar -czvf deploy.tar.gz -C deploy .
-
-      - name: Copy files to server via SSH
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "deploy.tar.gz"
-          target: "/home/blog-new"
-
-      - name: Execute remote SSH commands to deploy
+      - name: Execute remote commands via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
           script: |
-            # 进入服务器部署目录
-            cd /home/blog-new
+            # 1. 进入项目目录
+            cd /www/wwwroot/my-next-app  # 确保路径正确
             
-            # 解压新包（覆盖旧文件）
-            tar -xzvf deploy.tar.gz
+            # 2. 拉取最新代码
+            git pull origin main
             
-            # 使用 PM2 启动或重启
-            # Next.js standalone 模式的入口是 server.js
-            # --name 定义应用名，方便管理
-            pm2 restart nextjs-blog || pm2 start server.js --name "nextjs-blog"
+            # 3. 加载环境变量 (Node/PNPM 路径)
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             
-            # 清理压缩包
-            rm deploy.tar.gz
-            echo "🚀 Deployment successful!"
+            # 4. 安装依赖并构建
+            pnpm install
+            pnpm run build
+            
+            # 5. 重启 PM2 进程
+            pm2 restart next-app || pm2 start pnpm --name "next-app" -- start -- -p 3434
