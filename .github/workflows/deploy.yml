@@ -22,7 +22,7 @@ jobs:
           debug: true
           script: |
             # 1. 进入项目目录
-            cd /www/wwwroot/my-next-app  # 确保路径正确
+            cd /www/wwwroot/next-app/blog-new  # 确保路径正确
             
             # 2. 拉取最新代码
             git pull origin main
